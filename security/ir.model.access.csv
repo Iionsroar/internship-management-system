@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_internship_interns,internship.interns,model_internship_interns,base.group_user,1,1,1,1
+access_internship_activities,internship.activities,model_internship_activities,base.group_user,1,1,1,1
+access_project_teams,project.teams,model_project_teams,base.group_user,1,1,1,1

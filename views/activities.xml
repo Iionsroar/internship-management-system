@@ -1,0 +1,71 @@
+<odoo>
+  <data>
+    <!-- explicit form view definition -->
+
+    <record model="ir.ui.view" id="internship.activities_form">
+      <field name="name">Activities Form View</field>
+      <field name="model">internship.activities</field>
+      <field name="arch" type="xml">
+        <form string="Activities">
+          <sheet>
+            <div>
+              <h1>
+                <field name="intern_id" placeholder="Intern's Name" required="1"/>
+              </h1>
+            </div>
+            <group>
+              <group>
+                <field name="date" required="1"/>
+                <field name="duration" required="1"/>
+              </group>
+              <group>
+                <field name="description" required="1"/>
+                <field name="impediments"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+    
+
+    <!-- explicit list view definition -->
+    
+    <record model="ir.ui.view" id="internship.activities_list">
+      <field name="name">Activities List View</field>
+      <field name="model">internship.activities</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="date"/>
+          <field name="intern_id"/>
+          <field name="description"/>
+          <field name="duration"/>
+          <field name="impediments"/>
+        </tree>
+      </field>
+    </record> 
+
+
+    <!-- actions opening views on models -->
+    
+    <record model="ir.actions.act_window" id="internship.activities_action">
+      <field name="name">Activities</field>
+      <field name="res_model">internship.activities</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[]</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          No Activities yet, let's add one
+        </p><p>
+          Please call/ email our Admin if you have inquiry...
+        </p>
+      </field>
+    </record>
+    
+
+    <!-- actions -->
+    
+    <menuitem name="Activities" id="internship.activities_menu" parent="internship.menu_root" action="internship.activities_action" sequence="1"/>
+    
+  </data>
+</odoo>

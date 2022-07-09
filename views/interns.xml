@@ -1,0 +1,99 @@
+<odoo>
+  <data>
+    <!-- explicit form view definition -->
+
+    <record model="ir.ui.view" id="internship.interns_form">
+      <field name="name">Interns Form View</field>
+      <field name="model">internship.interns</field>
+      <field name="arch" type="xml">
+        <form string="Interns">
+          <sheet>
+            <div colspan="4">
+              <h1 colspan="4">
+                <field name="intern_id" placeholder="Name" required="1"/>
+              </h1>
+            </div>
+            <group>
+              <group>
+                <field name="school_id" required="1"/>
+                <field name="project_id"/>
+                <field name="team_id"/>
+                <field name="email" required="1"/>
+                <field name="contact_no" required="1"/>
+              </group>
+              <group>
+                <field name="no_of_hours" required="1"/>
+                <field name="start_date" required="1"/>
+                <field name="end_date" required="1"/>
+                <field name="internship_status" required="1"/>
+                <field name="intern_position"/>
+              </group>
+            </group>
+            <group>
+              <field name="endorsement_letter"/>
+              <field name="memorandum_of_agreement"/>
+              <field name="intern_agreement"/>
+            </group>
+            <group>
+              <field name="questions_remarks" placeholder="Intern's inquiries"/>
+              <field name="hr_comments"/>
+            </group>
+
+          </sheet>
+        </form>
+      </field>
+    </record>
+    
+
+    <!-- explicit list view definition -->
+    
+    <record model="ir.ui.view" id="internship.interns_list">
+      <field name="name">Interns List View</field>
+      <field name="model">internship.interns</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="intern_id"/>
+          <field name="school_id"/>
+          <field name="email"/>
+          <field name="contact_no"/>
+          <field name="no_of_hours"/>
+          <field name="internship_status"/>
+          <field name="project_id"/>
+          <field name="team_id"/>
+          <field name="intern_position"/>
+          <field name="start_date"/>
+          <field name="end_date"/>
+          <field name="endorsement_letter"/>
+          <field name="memorandum_of_agreement"/>
+          <field name="intern_agreement"/>
+          <field name="questions_remarks"/>
+          <field name="hr_comments"/>
+        </tree>
+      </field>
+    </record> 
+
+
+    <!-- actions opening views on models -->
+    
+    <record model="ir.actions.act_window" id="internship.interns_action">
+      <field name="name">Interns</field>
+      <field name="res_model">internship.interns</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[]</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          No Interns yet, let's add one
+        </p><p>
+          Please call/ email our Admin if you have inquiry...
+        </p>
+      </field>
+    </record>
+    
+
+    <!-- actions -->
+    
+    <menuitem name="Internship" id="internship.menu_root" sequence="2"/>
+    <menuitem name="Interns" id="internship.interns_menu" parent="internship.menu_root" action="internship.interns_action" sequence="1"/>
+    
+  </data>
+</odoo>
