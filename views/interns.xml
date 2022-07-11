@@ -7,6 +7,17 @@
       <field name="model">internship.interns</field>
       <field name="arch" type="xml">
         <form string="Interns">
+          <header>
+            <button name="onboard" string="Onboarding" type="object" class="oe_highlight" attrs="{'invisible': [('internship_state', '==', 'onboarding')]}"/>
+            <button name="work" string="Working" type="object" class="oe_highlight" attrs="{'invisible': [('internship_state', '==', 'working')]}"/>
+            <button name="offboard" string="Offboarding" type="object" class="oe_highlight" attrs="{'invisible': [('internship_state', '==', 'offboarding')]}"/>
+            <field name="internship_state" widget="statusbar" readonly="1" force_save="1"/>
+          </header>
+          <header>
+            <button name="endorse_to_project" string="Endorse to Project" type="object" class="oe_highlight" attrs="{'invisible':['|', ('internship_state', '!=', 'onboarding'), ('working_state', '==', 'project')]}"/>
+            <button name="assign_team" string="Assign Team" type="object" class="oe_highlight" attrs="{'invisible':['|', ('internship_state', '!=', 'onboarding'), ('working_state', '==', 'team')]}"/>
+            <field name="working_state" widget="statusbar" readonly="1" force_save="1"/>
+          </header>
           <sheet>
             <div colspan="4">
               <h1 colspan="4">
@@ -16,28 +27,49 @@
             <group>
               <group>
                 <field name="school_id" required="1"/>
-                <field name="project_id"/>
-                <field name="team_id"/>
-                <field name="email" required="1"/>
+                <field name="email" widget="email" required="1"/>
                 <field name="contact_no" required="1"/>
               </group>
               <group>
-                <field name="no_of_hours" required="1"/>
+                <field name="total_hours" widget="integer" required="1"/>
+                <field name="daily_hours" widget="integer" required="1"/>
                 <field name="start_date" required="1"/>
                 <field name="end_date" required="1"/>
-                <field name="internship_status" required="1"/>
-                <field name="intern_position"/>
               </group>
             </group>
             <group>
-              <field name="endorsement_letter"/>
-              <field name="memorandum_of_agreement"/>
-              <field name="intern_agreement"/>
+              <group>
+                <field name="supervisor_id"/>
+                <field name="mentor_id"/>
+                <field name="project_id"/>
+                <field name="team_id"/>
+                <field name="intern_position"/>
+              </group>
+              <group>
+                <field name="endorsement_letter"/>
+                <field name="memorandum_of_agreement"/>
+                <field name="intern_agreement"/>
+              </group>
             </group>
             <group>
               <field name="questions_remarks" placeholder="Intern's inquiries"/>
-              <field name="hr_comments"/>
+              <field name="hr_comments" placeholder="HR's comments/ replies"/>
             </group>
+            <!-- <group>
+              <notebook>
+                <page>
+                  <field name="activity_ids">
+                    <tree string="Activities" editable="top">
+                      <field name="date"/>
+                      <field name="description"/>
+                      <field name="duration"/>
+                      <field name="impediments"/>
+                      <field name="intern_id"/>
+                    </tree>
+                  </field>
+                </page>
+              </notebook>
+            </group> -->
 
           </sheet>
         </form>
@@ -51,26 +83,83 @@
       <field name="name">Interns List View</field>
       <field name="model">internship.interns</field>
       <field name="arch" type="xml">
-        <tree>
+        <tree string="Interns">
           <field name="intern_id"/>
-          <field name="school_id"/>
-          <field name="email"/>
-          <field name="contact_no"/>
-          <field name="no_of_hours"/>
-          <field name="internship_status"/>
+          <field name="internship_state"/>
+          <field name="working_state"/>
           <field name="project_id"/>
           <field name="team_id"/>
           <field name="intern_position"/>
           <field name="start_date"/>
+          <field name="total_hours"/>
           <field name="end_date"/>
           <field name="endorsement_letter"/>
           <field name="memorandum_of_agreement"/>
           <field name="intern_agreement"/>
-          <field name="questions_remarks"/>
-          <field name="hr_comments"/>
         </tree>
       </field>
-    </record> 
+    </record>    
+
+
+    <!-- explicit kanban view definition -->
+    
+    <!-- reference: hr_employee_public_views -->
+    <!-- <record model="ir.ui.view" id="internship.interns_kanban">
+      <field name="name">Interns Kanban View</field>
+      <field name="model">internship.interns</field>
+      <field name="arch" type="xml">
+        <kanban string="Interns">
+          <templates>
+            <t t-name="kanban-box">
+              <div class="oe_kanban_card">
+                <div class="o_kanban_record_title">
+                  <field name="intern_id"/>
+                </div>
+                <div class="oe_kanban_details">
+                  <field name="internship_state"/>
+                  <field name="working_state"/>
+                  <field name="project_id"/>
+                  <field name="team_id"/>
+                  <field name="intern_position"/>
+                  <field name="endorsement_letter"/>
+                  <field name="memorandum_of_agreement"/>
+                  <field name="intern_agreement"/>
+                </div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>  -->
+
+
+    <!-- explicit search view definition -->
+
+    <record model="ir.ui.view" id="internship.interns_search">
+      <field name="name">Interns Search View</field>
+      <field name="model">internship.interns</field>
+      <field name="arch" type="xml">
+        <search>
+          <field name="intern_id"/>
+          <field name="start_date"/>
+          <field name="internship_state" widget="selection"/>
+          <field name="working_state" widget="selection"/>
+          <field name="project_id" widget="selection"/>
+          <field name="team_id" widget="selection"/>
+          <field name="intern_position" widget="selection"/>
+            
+          <group string="Group By">
+            <filter name="group_by_internship_state" string="Internship State" context="{'group_by': 'internship_state'}"/>
+            <filter name="group_by_working_state" string="Working State" context="{'group_by': 'working_state'}"/>
+            <filter name="group_by_project_id" string="Project" context="{'group_by': 'project_id'}"/>
+            <filter name="group_by_team_id" string="Team" context="{'group_by': 'team_id'}"/>
+            <filter name="group_by_intern_position" string="Intern Position" context="{'group_by': 'intern_position'}"/>
+            <filter name="group_by_supervisor" string="Supervisor" context="{'group_by': 'supervisor_id'}"/>
+            <filter name="group_by_mentor" string="Mentor" context="{'group_by': 'mentor_id'}"/>
+          </group>
+        </search>
+      </field>
+    </record>
 
 
     <!-- actions opening views on models -->

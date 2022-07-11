@@ -35,11 +35,14 @@
       <field name="name">Activities List View</field>
       <field name="model">internship.activities</field>
       <field name="arch" type="xml">
-        <tree>
-          <field name="date"/>
-          <field name="intern_id"/>
-          <field name="description"/>
-          <field name="duration"/>
+        <!-- <header>
+          <button name="export" string="Export to Weekly Timesheet" type="object" class="oe_highlight"/>
+        </header> -->
+        <tree string="Activities" editable="top">
+          <field name="date" required="1"/>
+          <field name="intern_id" required="1"/>
+          <field name="description" required="1"/>
+          <field name="duration" required="1"/>
           <field name="impediments"/>
         </tree>
       </field>
@@ -53,6 +56,7 @@
       <field name="res_model">internship.activities</field>
       <field name="view_mode">tree,form</field>
       <field name="domain">[]</field>
+      <field name="target">current</field>
       <field name="help" type="html">
         <p class="o_view_nocontent_smiling_face">
           No Activities yet, let's add one
@@ -62,7 +66,6 @@
       </field>
     </record>
     
-
     <!-- actions -->
     
     <menuitem name="Activities" id="internship.activities_menu" parent="internship.menu_root" action="internship.activities_action" sequence="1"/>

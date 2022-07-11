@@ -3,11 +3,12 @@
     'name': "Internship",
 
     'summary': """
-        Short (1 phrase/line) summary of the module's purpose, used as
-        subtitle on modules listing or apps.openerp.com""",
+        Manage your internship program""",
 
     'description': """
-        Long description of module's purpose
+        Internship Management System
+        ====================
+        Easy-to-use internship management system that allows keeping track of your institution's interns and training activities. 
     """,
 
     'author': "Achieve Without Borders, Inc.",
@@ -23,6 +24,7 @@
     'depends': [
         'base',
         'project',
+        'hr',
     ],
 
     # always loaded
